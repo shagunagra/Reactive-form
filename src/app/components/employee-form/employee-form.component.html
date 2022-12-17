@@ -1,0 +1,69 @@
+<div class="form-main">
+  <form  [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <div class="header">
+        <h3>Employee Details</h3>
+      </div>
+
+      <div [ngClass]="{'has-error': employeeForm.get('fullName')?.errors && employeeForm.get('fullName')?.touched || employeeForm.get('fullName')?.dirty}">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" formControlName="fullName" class="textinput">
+        <span class="error" *ngIf="employeeForm.get('fullName')?.errors && employeeForm.get('fullName')?.touched || employeeForm.get('fullName')?.dirty">
+          <span *ngIf="employeeForm.get('fullName')?.errors?.['required']">Full Name is required</span>
+          <span *ngIf="employeeForm.controls['fullName'].hasError('minlength')">Full Name must be greater than 2 characters</span>
+        </span>
+      </div>
+
+      <div class="address" [ngClass]="{'has-error': employeeForm.get('address')?.errors && employeeForm.get('address')?.touched || employeeForm.get('address')?.dirty}">
+        <label for="address">Address</label>
+        <textarea type="textarea" id="address" formControlName="address" class="textinput"></textarea>
+        <span class="error" *ngIf="employeeForm.get('address')?.errors && employeeForm.get('address')?.touched || employeeForm.get('address')?.dirty">
+          <span *ngIf="employeeForm.get('address')?.errors?.['required']">Address is required</span>
+          <span *ngIf="employeeForm.controls['address'].hasError('minlength') || employeeForm.controls['address'].hasError('maxlength')">Address must be greater than 2 and less than 25 characters</span>
+          <span *ngIf="employeeForm.controls['address'].hasError('pattern')">Only Characters are allowed</span>
+        </span>
+      </div>
+
+      <div [ngClass]="{'has-error': employeeForm.get('dob')?.errors && employeeForm.get('dob')?.touched || employeeForm.get('dob')?.dirty}">
+        <label for="dob">DOB</label>
+        <input type="date" id="dob" formControlName="dob" class="textinput dob">
+        <span class="error" *ngIf="employeeForm.get('dob')?.errors && employeeForm.get('dob')?.touched || employeeForm.get('dob')?.dirty">
+          <span *ngIf="employeeForm.get('dob')?.errors?.['required']">DOB is required</span>
+        </span>
+      </div>
+
+      <div [ngClass]="{'has-error': employeeForm.get('role')?.errors && employeeForm.get('role')?.touched || employeeForm.get('role')?.dirty}">
+        <label for="role">Role</label>
+        <select (change)="changeRole($event)" formControlName="role">
+        <option value="">Choose Role</option>
+        <option *ngFor="let role of roles" [ngValue]="role">
+          {{ role }}
+        </option>
+      </select>
+      <span class="error" *ngIf="employeeForm.get('role')?.errors && employeeForm.get('role')?.touched || employeeForm.get('role')?.dirty">
+        <span *ngIf="employeeForm.get('role')?.errors?.['required']">Role is required</span>
+      </span>
+      </div>
+
+      <div [ngClass]="{'has-error': employeeForm.get('phone')?.errors && employeeForm.get('phone')?.touched || employeeForm.get('phone')?.dirty}">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" formControlName="phone" class="textinput phone">
+        <span class="error" *ngIf="employeeForm.get('phone')?.errors && employeeForm.get('phone')?.touched || employeeForm.get('phone')?.dirty">
+          <span *ngIf="employeeForm.get('phone')?.errors?.['required']">Phone Number is required</span>
+          <span *ngIf="employeeForm.controls['phone'].hasError('maxlength')">Phone Number should not be less than 10</span>
+        </span>
+      </div>
+
+      <div [ngClass]="{'has-error': employeeForm.get('gender')?.errors && employeeForm.get('gender')?.touched || employeeForm.get('gender')?.dirty}">
+        <label for="gender">Gender</label>
+        <input type="radio" value="Male" formControlName="gender" class="gender"> Male
+        <input type="radio" value="Female" formControlName="gender" class="gender"> Female
+        <span class="error" *ngIf="employeeForm.get('gender')?.errors && employeeForm.get('gender')?.touched || employeeForm.get('gender')?.dirty">
+          <span *ngIf="employeeForm.get('gender')?.errors?.['required']">Gender is required</span>
+        </span>
+      </div>
+
+    </div>
+    <button type="submit" class="submit">Submit</button>
+  </form>
+</div>
